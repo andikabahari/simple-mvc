@@ -173,7 +173,7 @@ class Route
    * @param string $method
    * @return void
    */
-  private function call($controller, $method): void
+  private function call(string $controller, string $method): void
   {
     require_once CONTROLLER_PATH.$controller.'.php';
 
