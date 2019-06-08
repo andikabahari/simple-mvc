@@ -5,6 +5,7 @@ A simple Model-View-Controller
 ## Config
 
 Setup the configuration for your site url, controllers, and routes.
+File is located at ./app/config.php
 
 ```php
 <?php
@@ -28,6 +29,7 @@ $config['routes'] = [
 ## Routing
 
 Setup the page route and specify the method of the controller.
+File is located at ./index.php
 
 ```php
 $route->get('/', ['BaseController' => 'home']);
