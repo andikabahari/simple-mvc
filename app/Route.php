@@ -134,6 +134,7 @@ class Route
   }
 
   /**
+   * @throws RouteException
    * @return void
    */
   private function run(): void
