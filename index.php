@@ -7,6 +7,7 @@ define('CONTROLLER_PATH', APP_PATH.'Controllers'.DIRECTORY_SEPARATOR);
 define('VIEW_PATH', APP_PATH.'Views'.DIRECTORY_SEPARATOR);
 
 require_once APP_PATH.'DB.php';
+require_once APP_PATH.'RouteException.php';
 require_once APP_PATH.'Route.php';
 require_once APP_PATH.'config.php';
 

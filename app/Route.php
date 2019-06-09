@@ -72,7 +72,8 @@ class Route
     $this->method = $_SERVER['REQUEST_METHOD'];
     $this->ruri = $_SERVER['REQUEST_URI'];
     $this->segment = str_replace('/index.php', '', str_replace(explode('/', str_replace(['http://', 'https://'], '', rtrim($this->baseURL, '/'))), '', ltrim($this->ruri, '/')));
-    $this->route = preg_replace('/\/(.+)/', rtrim($this->segment, '/'), $this->segment);
+    $this->segment = preg_replace('/\?(.*)?/', '', $this->segment);
+    $this->route = preg_replace('/\/([a-zA-Z0-9\/_-]+)/', rtrim($this->segment, '/'), $this->segment);
   }
 
   /**
@@ -118,6 +119,25 @@ class Route
    */
   public function route(): void
   {
+    try
+    {
+      $this->run();
+    }
+    catch (RouteException $e)
+    {
+      echo '[route error] '.$e;
+    }
+    catch(Exception $e)
+    {
+      echo '[unexpected error] '.$e;
+    }
+  }
+
+  /**
+   * @return void
+   */
+  private function run(): void
+  {
     if (in_array($this->route, $this->{strtolower($this->method).'Routes'}))
     {
       $success = false;
@@ -134,14 +154,14 @@ class Route
 
       if ( ! $success)
       {
-        die('Page not found!');
+        throw new RouteException('Page not found!');
       }
 
       $this->call($controller, $method);
     }
     else
     {
-      die('Page not found!');
+      throw new RouteException('Page not found!');
     }
   }
 
@@ -173,7 +193,7 @@ class Route
    * @param string $method
    * @return void
    */
-  private function call($controller, $method): void
+  private function call(string $controller, string $method): void
   {
     require_once CONTROLLER_PATH.$controller.'.php';
 
