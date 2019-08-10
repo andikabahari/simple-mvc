@@ -71,8 +71,7 @@ class Route
     $this->routes = $config['routes'];
     $this->method = $_SERVER['REQUEST_METHOD'];
     $this->ruri = $_SERVER['REQUEST_URI'];
-    $this->segment = str_replace('/index.php', '', str_replace(explode('/', str_replace(['http://', 'https://'], '', rtrim($this->baseURL, '/'))), '', ltrim($this->ruri, '/')));
-    $this->segment = preg_replace('/\?(.*)?/', '', $this->segment);
+    $this->segment = preg_replace('/\?(.*)?/', '', str_replace('/index.php', '', str_replace(explode('/', str_replace(['http://', 'https://'], '', rtrim($this->baseURL, '/'))), '', ltrim($this->ruri, '/'))));
     $this->route = preg_replace('/\/([a-zA-Z0-9\/_-]+)/', rtrim($this->segment, '/'), $this->segment);
   }
 
